@@ -1,0 +1,56 @@
+<!--
+ * @Description: 防抖
+ * @Author: Jasper
+ * @Github: https://github.com/yuanxinfeng
+ * @Date: 2019-10-30 16:25:35
+ * @LastEditors: Jasper
+ * @LastEditTime: 2019-10-30 17:00:24
+ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>debounce</title>
+  </head>
+  <body>
+    <input type="text" id="ipt" />
+    <ul id="sy"></ul>
+  </body>
+  <script>
+    let arr = new Array();
+    let index = 0;
+    let ipt = document.getElementById("ipt");
+    function debounce(_func_) {
+      // 创建一个标记用来存放定时器的返回值
+      let timeOut = null;
+      return function() {
+        // 每当用户输入的时候把前一个 setTimeout clear 掉
+        clearTimeout(timeOut);
+        // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 _func_ 函数
+        setTimeout(() => {
+          _func_.apply(this, arguments);
+        }, 300);
+      };
+    }
+    function sayHi() {
+      index++;
+      console.log(`防抖成功${index}！！！`);
+      arr.push(`防抖成功${index}！！！`);
+      if (!ipt.value) clear();
+      sy();
+    }
+    function clear() {
+      arr = [];
+    }
+    function sy() {
+      let str = "";
+      arr.map((n, i) => {
+        str += `<li>${n}</li>`;
+      });
+      document.getElementById("sy").innerHTML = str;
+    }
+    ipt.addEventListener("input", debounce(sayHi));
+  </script>
+</html>
