@@ -1,0 +1,88 @@
+<!--
+ * @Description: 搜索高亮
+ * @Author: Jasper
+ * @Github: https://github.com/yuanxinfeng
+ * @Date: 2019-10-31 14:25:10
+ * @LastEditors: Jasper
+ * @LastEditTime: 2019-10-31 16:01:29
+ -->
+<!DOCTYPE html>
+<html lang="z-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Search highlight</title>
+    <style>
+      b {
+        color: red;
+      }
+      li {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="ipt" type="text" />
+    <section>
+      <ul id="container"></ul>
+    </section>
+  </body>
+  <script>
+    const container = document.getElementById("container");
+    const ipt = document.getElementById("ipt");
+    function throttle(_func_) {
+      let run = true;
+      return function() {
+        if (!run) return;
+        run = false;
+        setTimeout(() => {
+          _func_.apply(this, arguments);
+          run = true;
+        }, 300);
+      };
+    }
+    function memorize(fn) {
+      const cache = new Map();
+      return (name) => {
+        if (!name) {
+          container.innerHTML = "";
+          return;
+        }
+        if (cache.get(name)) {
+          container.innerHTML = cache.get(name);
+          return;
+        }
+        const res = fn.call(fn, name).join("");
+        cache.set(name, res);
+        container.innerHTML = res;
+      };
+    }
+
+    function handleInput(value) {
+      const reg = new RegExp(`\(${value}\)`);
+      const search = data.reduce((res, cur) => {
+        if (reg.test(cur)) {
+          const match = RegExp.$1;
+          res.push(`<li>${cur.replace(match, "<b>$&</b>")}</li>`);
+        }
+        return res;
+      }, []);
+      return search;
+    }
+    const data = [
+      "济南大明湖",
+      "济南大明湖公园",
+      "济南大明湖饭店",
+      "济南大酒店",
+      "济南趵突泉"
+    ];
+    const memorizeInput = memorize(handleInput);
+    ipt.addEventListener(
+      "input",
+      throttle((e) => {
+        memorizeInput(e.target.value);
+      })
+    );
+  </script>
+</html>
