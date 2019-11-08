@@ -275,7 +275,6 @@ function runTime() {
   let hour = now.getHours();
   let minute = now.getMinutes();
   let seconds = now.getSeconds();
-
   // 初始化时间颜色 并将走过的时间设置为黑色
   initStyle();
 

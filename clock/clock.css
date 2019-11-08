@@ -23,3 +23,23 @@ body {
   transition: left 1s, top 1s;
   transform-origin: 0 0;
 }
+
+.fullScreen{
+  position: fixed;
+  width: 10wh;
+}
+
+button{
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+  left: 20px;
+  top: 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button:focus{
+  outline: none;
+}
