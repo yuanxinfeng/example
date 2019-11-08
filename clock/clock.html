@@ -1,0 +1,62 @@
+<!--
+ * @Description: 罗盘时钟
+ * @Author: Jasper
+ * @Github: https://github.com/yuanxinfeng
+ * @Date: 2019-11-07 15:41:09
+ * @LastEditors: Jasper
+ * @LastEditTime: 2019-11-07 17:02:12
+ -->
+<!DOCTYPE html>
+<html lang="z-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>罗盘时钟</title>
+    <link rel="stylesheet" href="./clock.css" />
+  </head>
+  <body>
+    <div>
+      <button onclick="toggleFullScreen()">全屏</button>
+    </div>
+    <div id="clock"></div>
+  </body>
+  <script>
+    let fullscreen = false;
+    function toggleFullScreen() {
+      let element = document.documentElement;
+      let btn = document.querySelector('button');
+        // 判断是否已经是全屏
+        // 如果是全屏，退出
+        if (fullscreen) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            // console.log('已还原！');
+            btn.innerText = "全屏";
+        } else {    // 否则，进入全屏
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                // IE11
+                element.msRequestFullscreen();
+            }
+            // console.log('已全屏！');
+            btn.innerText = "退出";
+        }
+        fullscreen = !fullscreen;
+        
+    }
+  </script>
+  <script src="./clock.js"></script>
+</html>
